@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Chat Room</title>
+        <link rel="icon" href="images/favicon.png">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+        <link rel="stylesheet" type="text/css" href="css/style.css">
+    </head>
+    <body>
+        <!--  -->
+           
+        <!--  -->
+        <div class="container-fluid">
+            <div class="row navbg">
+                <img src="images/favicon.png" style="height: 42px;width: 40px; margin-top: 25px;margin-left: 20px;">
+                <h1 class="title"> Chat Room </h1>
+            </div>
+        </div>
+
+
+        <div class="bgimg">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-sm-1"></div>
+                    <div class="col-sm-3">
+                        <div class="card"  style="height: 45rem; margin-top: 40px;">
+                            <div id="sidebarheader"></div>
+                            <div class="scroll exp pm" id="data1" style="padding: 10px;" >
+                                <div id="sidebar"></div>
+                            </div>
+                        </div>
+                    </div>
+             
+                    <div class="col-sm-7">
+                        <div class="card"  style="height: 39rem; margin-top: 40px;">
+                            <div class="scroll exp pm" id="data" style="padding: 10px;" >
+                                <div class="container-fluid">
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <div id="messages-left"></div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div id="messages-right"></div>    
+                                        </div>
+                                    </div>        
+                                </div>
+                            </div>
+                        </div>
+                            <div class="msgbox" style="padding-top:21px; padding-bottom: 21px;">
+                                <div class="container">
+                                    <div class="row">      
+                                        <div clas="col-sm-11">
+                                            <form id="message-form">
+                                                <div style="float: left;"> 
+                                                    <input  name="message" placeholder="Message" class="form-control form-control-lg" type="text" size="90"  style="margin-left: 20px;" required autocomplete="off" >
+                                                </div>
+                                                <div style="float: left;"><button type="submit" class="btn btn-info" style="height: 48px;margin-left: 35px; "><strong>send</strong></button></div>
+                                            </form> 
+                                            <!-- <p style="float: left;">teju</p> -->
+                                        </div>
+                                        <div clas="col-sm-1">
+                                            <!-- <p style="float: right;">teju</p> -->
+                                            <input type="image"  id="send-location" src="https://img.icons8.com/fluent/48/000000/gps-device.png" style="margin-left: 10px;">
+                                        </div>
+                                    </div>
+                                </div>  
+                            </div> 
+                        
+                    </div>
+                    <div class="col-sm-1"></div>
+                </div>
+            </div>
+        </div> 
+
+
+        <script id="message-template-left" type="text/html">
+        <div style="line-height: 0.8;color:{{clr}}">
+            <p>
+            <strong style="font-size:20px;">{{username}}</strong>
+                &nbsp;&nbsp;
+                {{createdAt}}
+            </p>
+            <p style="font-size:25px">
+                {{message}}
+            </p>
+        </div>
+        <!-- <br> -->
+        </script>
+        
+        <script id="message-template-right" type="text/html">
+            <div style="line-height: 0.8;color:{{clr}}; text-align:right;">
+                <p>
+                <strong style="font-size:20px;">{{username}}</strong>
+                    &nbsp;&nbsp;
+                    {{createdAt}}
+                </p>
+                <p style="font-size:25px">
+                    {{message}}
+                </p>
+            </div>
+            <!-- <br> -->
+            </script>
+        
+        <script id="location-template-right" type="text/html">
+        <div style="line-height: 0.8;color:{{clr}}; text-align:right;">
+                <p>
+                    <strong style="font-size:20px;">{{username}}</strong>
+                    &nbsp;&nbsp;
+                    {{createdAt}}
+                </p>
+                <p style="font-size:25px">
+                    <a href="{{url}}" target="_blank" style="color:{{clr}}">My Current Location</a>
+                </p>
+            </div>
+            <br>
+        </script>
+
+        <script id="location-template-left" type="text/html">
+            <div style="line-height: 0.8;color:{{clr}};">
+                    <p>
+                        <strong style="font-size:20px;">{{username}}</strong>
+                        &nbsp;&nbsp;
+                        {{createdAt}}
+                    </p>
+                    <p style="font-size:25px">
+                        <a href="{{url}}" target="_blank" style="color:{{clr}}">My Current Location</a>
+                    </p>
+                </div>
+                <br>
+            </script>
+
+        <script id="sidebarheader-template" type="text/html">
+            <div style="background-color:#874e4c;">
+             <div style=" color:white; text-align:center; padding-top:10px"><h2>{{room}}</h2></div>
+            <div style=" color:white; padding:10px" ><h4>Users</h4></div>   
+            </div> 
+        </script>
+
+        <script id="sidebar-template" type="text/html">
+                <ul class="list-group">
+                 {{#users}}
+                    <li class="list-group-item" style="padding:20px">
+                    {{username}}
+                    </li>
+                 {{/users}}
+                </ul>       
+        </script>
+
+        
+
+        <!-- templatejs -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/3.0.1/mustache.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/qs/6.6.0/qs.min.js"></script>
+         <!-- bootstrap -->
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+        <!-- socketio -->
+        <script src="/socket.io/socket.io.js"></script>
+        <script src="/js/chat.js"></script>
+        
+    </body>
+</html>

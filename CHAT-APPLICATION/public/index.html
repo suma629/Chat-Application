@@ -16,8 +16,8 @@
              <div class="row navbg">
                 <img src="images/favicon.png" style="height: 42px;width: 40px; margin-top: 25px;margin-left: 20px;">
                 <h1 class="title"> Chat Room </h1>
+             </div>
             </div>
-        </div>
         
 
          <div class="bgimg">
@@ -41,11 +41,11 @@
                     </div>
                     <div style="margin-bottom: 10px;" >
                         <label style="font-size: 20px;color:chocolate;">Password</label>
-                        <input class="form-control form-control-lg" name="Password" type="text" id="password" placeholder="Password" required>
+                        <input class="form-control form-control-lg" name="Password" type="password" id="password" placeholder="Create Password" required>
                      </div>
                       <div style="text-align: center;">
-                       <input type="submit" onclick="register()"></input>
-
+                     
+                        <button class="btn btn-info btn-lg" type="submit"  style="margin-top: 20px;" onclick="register()">submit</button>
                        <p id="demo"></p>
                       </div>
                     
@@ -63,7 +63,7 @@
        <script>
        function register()
        {
-      //console.log('register in')
+     
        let Name=document.querySelector('#name');
        let Email=document.querySelector('#email');
        let Password=document.querySelector('#password');
@@ -86,17 +86,17 @@
             if(xhr.readyState === 4 ) {
                 if(xhr.status === 200)
                 {
-                console.log("registered successfully");
+               
                 document.getElementById("demo").innerHTML="Registered Successfully!";
                   setTimeout(location.href="http://localhost:3000/login.html",3000);
                 }
                 else
                 {
-                console.log(this.responseText)
+               
                 document.getElementById("demo").innerHTML="Oops! "+this.responseText;
                 }
             }
-    }
+        }
    }
 </script>
 </body>

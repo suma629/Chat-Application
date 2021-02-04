@@ -1,65 +1,56 @@
-const rooms = require("../../model/Rooms")
-const mongoose=require('mongoose')
-const db = mongoose.connection;
-// const addUser = ({id, username, room}) => {
 
-//     // /console.log(username);
-//     username = username.trim().toLowerCase()
-//     room = room.trim().toUpperCase()
- 
+const users = []
 
-//     if(!username || !room){
-      
-//       return {error:"username and room are required",user:null}
-//     }
-
-//     const existingUser = users.find((user) => {
-//         return user.username === username && user.room === room
-//     })
+const addUser = ({id, username, roomname}) => {
     
-//     if(existingUser){
-//       return {error:"username in use",user:null}
-//     }
-//     const user = {id, username, room}
-//     users.push(user)
-//     return {error:null,user:user}
-// }
+    username = username.trim().toLowerCase()
+  
+    roomname = roomname.trim().toUpperCase()
 
-const getUser = (id) => {
-    const user = rooms.find( {socketid : id} )
-    console.log(user.username);
-    //  db.collection('rooms').find({ 
-    //    "users.socketid" : id 
-    // })
-     return user.roomname;
+    if(!username || !roomname){
+      
+      return {error:"username and room are required",user:null}
+    }
+
+    const existingUser = users.find((user) => {
+        return user.username === username && user.roomname === roomname
+    })
+    
+    if(existingUser){
+      return {error:"username in use",user:null}
+    }
+    const user = {id, username, roomname}
+    users.push(user)
+    return {error:null,user:user}
 }
 
-const getUsersInRoom = (room) => {
+const getUser = (id) => {
+    const user = users.find((user) => {
+        return user.id === id
+    })
+    return user
+}
 
-    const roomExist =  rooms.findOne({roomname:room}) 
-    const usersinroom = roomExist.users;
-    return usersinroom;
+const getUsersInRoom = (roomname) => {
+    const usersInRoom = users.filter((user) => {
+        return user.roomname === roomname
+    })
+    return usersInRoom
 }
 
 const removeUser = (id) => {
-    const index = rooms.find({ 
-        "users.socketid" : id 
-     })
-   rooms.update(
-       { $pull : {users : {socketid : id} } }
-   )
-   return index;
-    // const index = users.findIndex((user) => {
-    //     return user.id === id
-    // })
+    const index = users.findIndex((user) => {
+        return user.id === id
+    })
 
-    // if(index != -1)
-    // {
-    //     return users.splice(index, 1)[0]
-    // }
+    if(index != -1)
+    {
+        return users.splice(index, 1)[0]
+    }
 }
 
 module.exports = {
+    addUser,
     removeUser,
     getUser,
     getUsersInRoom

@@ -1,6 +1,5 @@
-// const socket = require('socket.io')
-const socket = io();
 
+var socket = io({transports: ['websocket']});
 
 
 
@@ -18,7 +17,6 @@ const $sidebarheader = document.querySelector('#sidebarheader')
 //templates
 const messageTemplateLeft = document.querySelector('#message-template-left').innerHTML
 const messageTemplateRight = document.querySelector('#message-template-right').innerHTML
-//const locationTemplate = document.querySelector("#location-template").innerHTML
 const sidebarTemplate = document.querySelector('#sidebar-template').innerHTML
 const sidebarheaderTemplate = document.querySelector('#sidebarheader-template').innerHTML
 const locationTemplateLeft = document.querySelector("#location-template-left").innerHTML
@@ -26,7 +24,6 @@ const locationTemplateRight = document.querySelector("#location-template-right")
 
 
 
-//  const user= localStorage.getItem('joinroomdetails');
 
  const username = localStorage.username;
  const rno= localStorage.roomno;
@@ -34,7 +31,7 @@ const locationTemplateRight = document.querySelector("#location-template-right")
  console.log(rno)
 
 socket.emit('join', {username:username, room:rno} , (error)=> {
-    console.log(username,room);
+    
     if(error)
     {
         alert(error)
@@ -43,11 +40,11 @@ socket.emit('join', {username:username, room:rno} , (error)=> {
 })
  
 socket.on('receiveMessage', (message,id) => {
-   // console.log(socket.id)
-   console.log(message)
+  
+  
      if(id === socket.id)
      { 
-        const htmlL = Mustache.render(messgeTemplateLeft,{
+        const htmlL = Mustache.render(messageTemplateLeft,{
         clr : 'transparent',
         username : message.username,
         message : message.text,
